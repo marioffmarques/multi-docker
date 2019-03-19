@@ -8,17 +8,16 @@ before_install:
 script:
   - docker run stephenrider/react-test npm test -- --coverage
 
-#after testing - create prod images
+# After testing - create prod images
 after_success:
   - docker build -t stephenrider/multi-client ./client
   - docker build -t stephenrider/multi-nginx ./nginx
   - docker build -t stephenrider/multi-server ./server
   - docker build -t stephenrider/multi-worker ./worker
-
-#after create prod images -> Login to Dockercli
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-#and push them to docker hub
-- docker push stephenrider/multi-client
-- docker push stephenrider/multi-nginx
-- docker push stephenrider/multi-server
-- docker push stephenrider/multi-worker
+  # After create prod images -> Login to Dockercli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # And push them to docker hub
+  - docker push stephenrider/multi-client
+  - docker push stephenrider/multi-nginx
+  - docker push stephenrider/multi-server
+  - docker push stephenrider/multi-worker
