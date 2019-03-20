@@ -3,21 +3,21 @@ services:
   - docker
 
 before_install:
-  - docker build -t stephenrider/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t mffmarques/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run stephenrider/react-test npm test -- --coverage
+  - docker run mffmarques/react-test npm test -- --coverage
 
 # After testing - create prod images
 after_success:
-  - docker build -t stephenrider/multi-client ./client
-  - docker build -t stephenrider/multi-nginx ./nginx
-  - docker build -t stephenrider/multi-server ./server
-  - docker build -t stephenrider/multi-worker ./worker
+  - docker build -t mffmarques/multi-client ./client
+  - docker build -t mffmarques/multi-nginx ./nginx
+  - docker build -t mffmarques/multi-server ./server
+  - docker build -t mffmarques/multi-worker ./worker
   # After create prod images -> Login to Dockercli
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # And push them to docker hub
-  - docker push stephenrider/multi-client
-  - docker push stephenrider/multi-nginx
-  - docker push stephenrider/multi-server
-  - docker push stephenrider/multi-worker
+  - docker push mffmarques/multi-client
+  - docker push mffmarques/multi-nginx
+  - docker push mffmarques/multi-server
+  - docker push mffmarques/multi-worker
